@@ -9,10 +9,10 @@
 │  mongodb.py
 │  parse.py
 │
-├─view
-│      db.pinglun.png.png
-│      db_dianpu.png.png
-│      pacharm_pinglun.png.png
+└─view
+        db.pinglun.png.png
+        db_dianpu.png.png
+        pacharm_pinglun.png.png
 
 环境依赖
 
