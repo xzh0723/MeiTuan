@@ -1,3 +1,11 @@
+# -*- coding:utf-8 -*-
+
+"""
+Updated at 14:20 at May 24,2019
+@title: 美团店铺信息爬虫
+@author: xzh0723
+"""
+
 import requests
 import json
 from mongodb import MongoDB
