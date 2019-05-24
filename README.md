@@ -58,7 +58,8 @@ _token参数的构造：
 
 抓取结果
 
-database screenshot
+ ![image](https://github.com/xzh0723/meituan/view/db_dianpu.png)
+  ![image](https://github.com/xzh0723/meituan/view/db_pinglun.png)
 
 公告
 
