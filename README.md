@@ -3,16 +3,20 @@
 项目目录
 
 │  config.py
-│  creat_token.py
-│  demo.py
-│  get_uuid.py
-│  mongodb.py
+│  dianping.py
 │  parse.py
+│  proxy.py
+│  README.md
+│  requirements.txt
+│
+├─utils
+│      common.py
+│      ua.log
+│      __init__.py
 │
 └─view
-        db.pinglun.png.png
-        db_dianpu.png.png
-        pacharm_pinglun.png.png
+        analysis*.png
+        db.png
 
 环境依赖
 
