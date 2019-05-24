@@ -1,21 +1,6 @@
 美团美食店铺爬虫
 ==========
 
-项目目录
---------
-
-│  config.py
-│  creat_token.py
-│  demo.py
-│  get_uuid.py
-│  mongodb.py
-│  parse.py
-│
-└─view
-        db.pinglun.png.png
-        db_dianpu.png.png
-        pacharm_pinglun.png.png
-
 环境依赖
 ---------
 pyhon3.7.2
@@ -70,4 +55,4 @@ _token参数的构造：
 
 公告
 =========
-  本代码仅作学习交流，切勿用于商业用途，否则后果自负。若涉及点评网侵权，请邮箱联系，会尽快处理。
+  本代码仅作学习交流，切勿用于商业用途，否则后果自负。
