@@ -8,15 +8,13 @@
 │  get_uuid.py
 │  mongodb.py
 │  parse.py
-│
-├─utils
-│      config.py
-│      ua.log
-│      __init__.py
+│  config.py
 │
 └─view
-        analysis*.png
-        db.png
+        db.pinglun.png
+        db_dianpu.png
+        paycharm_pinglun.png
+
 环境依赖
 
 pyhon3.7.2
@@ -32,7 +30,7 @@ pyhon3.7.2
 项目难点
 
   测试期间发现美团的反爬措施有：
-
+        
 常规链接404（店铺详情页链接404页面）
 _token参数
 验证码（常规四字中英文混合）
