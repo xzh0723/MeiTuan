@@ -2,18 +2,17 @@
 
 项目目录
 
+│  config.py
 │  creat_token.py
-│  decrypt.py
 │  demo.py
 │  get_uuid.py
 │  mongodb.py
 │  parse.py
-│  config.py
 │
-└─view
-        db.pinglun.png
-        db_dianpu.png
-        paycharm_pinglun.png
+├─view
+│      db.pinglun.png.png
+│      db_dianpu.png.png
+│      pacharm_pinglun.png.png
 
 环境依赖
 
