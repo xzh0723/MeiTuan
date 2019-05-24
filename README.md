@@ -58,8 +58,8 @@ _token参数的构造：
 
 抓取结果
 
- ![image](https://github.com/xzh0723/meituan/blod/master/view/db_dianpu.png)
-  ![image](https://github.com/xzh0723/meituan/blob/master/view/db.pinglun.png.png)
+ ![image](https://github.com/xzh0723/meituan/blob/master/view/db_dianpu.png.png)
+ ![image](https://github.com/xzh0723/meituan/blob/master/view/db.pinglun.png.png)
 
 公告
 
