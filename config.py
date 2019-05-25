@@ -3,11 +3,25 @@ HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Mobile Safari/537.36'
 }
 
-originUrl = 'https://chs.meituan.com/meishi/c17/'
-base_url = 'https://chs.meituan.com/meishi/api/poi/getPoiList?'
-comment_url = 'https://www.meituan.com/meishi/api/poi/getMerchantComment?'
+type_dict = {
+    '代金券': '393', '蛋糕甜点': '11', '火锅': '17', '自助餐': '40', '川菜': '30', '湘菜': '510', '小吃快餐': '36',
+    '其他美食': '24', '日韩料理': '28', '东北菜': '20003', '聚餐宴请': '395', '西餐': '35', '香锅烤鱼': '20004',
+    '烧烤烤肉': '54', '江浙菜': '56', '中式烧烤/烤串': '400', '粤菜': '57', '咖啡酒吧': '41', '西北菜': '58', '京菜鲁菜': '59',
+    '云贵菜': '60', '东南亚菜': '62', '海鲜': '63', '素食': '217', '台湾/客家菜': '227', '创意菜': '228', '汤/粥/炖菜': '229',
+    '蒙餐': '232', '新疆菜': '233'
+}
+
+city_dict = {
+    '长沙': 'chs', '成都': 'cd', '重庆': 'cq', '杭州': 'hz', '上海': 'sh',
+    '南京': 'nj', '武汉': 'wh', '北京': 'bj', '广州': 'gz', '深圳': 'sz'
+}
 
 cityName = input('请输入你要查询的城市：')
+type_ = type_dict[input('请输入你要查询的美食类型：')]
+cityId = city_dict[cityName]
+
+originUrl = f'http://{cityId}.meituan.com/meishi/c{type_}/'
+base_url = f'https://{cityId}.meituan.com/meishi/api/poi/getPoiList?'
 
 MONGO_URI = 'localhost'
 MONGO_PORT = 27017
