@@ -22,7 +22,7 @@ def fetch(page):
     token = CreatToken(page).get_token()
     params = {
         'cityName': cityName,
-        'cateId': '17',
+        'cateId': type_,
         'areaId': '0',
         'sort': '',
         'dinnerCountAttrId': '',
