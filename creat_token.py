@@ -29,7 +29,7 @@ class CreatToken():
             'cts': ts + 100 * 1000,
             'brVD': [1326, 538],
             'brR': [[1326, 538], [1326, 538], 24, 24],
-            'bI': ['https://chs.meituan.com/meishi/c17/pn3/', 'https://chs.meituan.com/meishi/c17/pn2/'],
+            'bI': [f'https://{cityId}.meituan.com/meishi/c{type_}/pn{self.page}/', f'https://{cityId}.meituan.com/meishi/c{type_}/pn{self.page-1}/'],
             'mT': [],
             'kT': [],
             'aT': [],
