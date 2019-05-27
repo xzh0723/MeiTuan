@@ -18,8 +18,12 @@ city_dict = {
 }
 
 cityName = input('请输入你要查询的城市：')
-type_ = type_dict[input('请输入你要查询的美食类型：')]
 cityId = city_dict[cityName]
+
+_type = input('请输入你要查询的美食类型：')
+type_ = type_dict[_type]
+
+collection = f'{cityName}/{_type}'
 
 originUrl = f'http://{cityId}.meituan.com/meishi/c{type_}/'
 base_url = f'https://{cityId}.meituan.com/meishi/api/poi/getPoiList?'
