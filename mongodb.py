@@ -9,7 +9,7 @@ class MongoDB():
 
     def save(self, item):
         try:
-            if self.db.meishi.insert(dict(item)):
+            if self.db[collection].insert(dict(item)):
                 print('成功插入数据库')
         except Exception as e:
             print('插入数据库失败：', e.args)
