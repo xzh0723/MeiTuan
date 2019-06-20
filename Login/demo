@@ -1,0 +1,108 @@
+import asyncio
+import execjs
+from bs4 import BeautifulSoup
+import re
+from pyppeteer import launch
+from requests import Session
+
+class MeituanLogin:
+    def __init__(self, Account, Password):
+        self.Account = Account
+        self.Password = Password
+        self.session = Session()
+        self.session.headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.80 Safari/537.36'
+        }
+
+    async def geth5Fingerprint(self):
+        """
+        获取h5指纹参数
+        :return:
+        """
+        browser = await launch({'args': ['--no-sandbox', '--disable-infobars'], }, userDataDir=r'D:\拉勾\userdata')
+        page = await browser.newPage()
+        await page.setJavaScriptEnabled(enabled=True)
+        await page.setUserAgent(
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.80 Safari/537.36')
+
+        await page.goto('file:///D:/%E7%BE%8E%E5%9B%A2%E7%99%BB%E5%BD%95/%E7%BE%8E%E5%9B%A2.html')
+
+        await asyncio.sleep(1)
+
+        html = await page.content()
+        h5Fingerprint = re.search('</script>(.*?)</body>', html).group(1)
+        print('h5指纹', h5Fingerprint)
+
+        await asyncio.sleep(1)
+
+        await page.goto('file:///D:/%E7%BE%8E%E5%9B%A2%E7%99%BB%E5%BD%95/encryptPwd.html')
+
+        await asyncio.sleep(1)
+
+        html = await page.content()
+        encryptPwd = re.search('</script>(.*?)</body>', html).group(1)
+        print('RSA加密密码', encryptPwd)
+
+        await browser.close()
+        return h5Fingerprint, encryptPwd
+
+    def getCsrf(self):
+        """
+        获取认证Csrf参数
+        :return:
+        """
+        url = 'https://passport.meituan.com/account/unitivelogin?service=www&continue=https%3A%2F%2Fwww.meituan.com%2Faccount%2Fsettoken%3Fcontinue%3Dhttp%253A%252F%252Fcd.meituan.com%252F'
+
+        r = self.session.get(url)
+        soup = BeautifulSoup(r.text, 'lxml')
+        csrf = soup.select('input[name="csrf"]')[0]['value']
+        print('认证参数', csrf)
+        return csrf
+
+    def encryptPwd(self):
+        """
+        RSA加密密码
+        :return:
+        """
+        with open('encryptPwd.js', 'rb') as f:
+            js = f.read().decode()
+
+        ctx = execjs.compile(js)
+        encryptPwd = ctx.call('encrypt', self.Password)
+        print(encryptPwd)
+        return encryptPwd
+
+    def login(self):
+        """
+        登录
+        :return:
+        """
+        loginAPI = 'https://passport.meituan.com/account/unitivelogin?risk_partner=0&risk_platform=1&risk_app=-1&uuid=34ebfd8f4ae642cea831.1560995483.1.0.0&service=www&continue=https%3A%2F%2Fwww.meituan.com%2Faccount%2Fsettoken%3Fcontinue%3Dhttp%253A%252F%252Fcd.meituan.com%252F'
+        loop = asyncio.get_event_loop()
+        h5Fingerprint, encryptPwd = loop.run_until_complete(self.geth5Fingerprint())
+        csrf = self.getCsrf()
+        # encryptPwd = self.encryptPwd()
+        self.session.headers.update({
+            'Referer': 'https://passport.meituan.com/account/unitivelogin?service=www&continue=https%3A%2F%2Fwww.meituan.com%2Faccount%2Fsettoken%3Fcontinue%3Dhttp%253A%252F%252Fcd.meituan.com%252F',
+            'X-CSRF-Token': csrf,
+            'X-Client': 'javascript',
+            'X-Requested-With': 'XMLHttpRequest',
+            # 'Cookie': '__mta=150821513.1558451397565.1561008520641.1561008570304.18; _lxsdk_cuid=16aedc3059e43-0a001c8235bd0e-7a1b34-100200-16aedc3059fc8; iuuid=8928289956E0DEDC81258FF113EE55E612C6AE864E76B21E40DF562EBEE60133; _lxsdk=8928289956E0DEDC81258FF113EE55E612C6AE864E76B21E40DF562EBEE60133; webp=1; __utmz=74597006.1558767512.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utma=74597006.426765488.1558767512.1558767512.1558953786.2; cityname=%E6%B7%B1%E5%9C%B3; i_extend=H__a100001__b2; ci=59; rvct=59%2C20%2C30%2C1%2C70%2C10%2C57%2C55%2C50; _hc.v=8aacd23f-d612-8bae-0082-9cea2ad85705.1558954306; uuid=34ebfd8f4ae642cea831.1560665036.1.0.0; mtcdn=K; lsu=; _lx_utm=utm_source%3Dso.com%26utm_medium%3Dorganic; _lxsdk_s=16b73539370-e55-13e-897%7C%7C17; SERV=www; LREF=aHR0cHM6Ly93d3cubWVpdHVhbi5jb20vYWNjb3VudC9zZXR0b2tlbj9jb250aW51ZT1odHRwJTNBJTJGJTJGY2QubWVpdHVhbi5jb20lMkY%3D; passport.sid=hnPB6A9LG_Djjn4azr3fdZ1Cb_8drWJt; passport.sid.sig=Wkwg3yhwzZxYDXr-dyw4EE0wxRU'
+        })
+        data = {
+            'countrycode': '86',
+            'email': self.Account,
+            'password': encryptPwd,
+            'origin': 'account-login',
+            'csrf': csrf,
+            'requestCode': '',
+            'responseCode': '',
+            'h5Fingerprint': h5Fingerprint
+        }
+
+        r = self.session.post(loginAPI, data=data).json()
+        print(r)
+
+if __name__ == '__main__':
+    spider = MeituanLogin("手机号", "密码")
+    spider.login()
